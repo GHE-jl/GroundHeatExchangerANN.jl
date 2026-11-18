@@ -1,0 +1,17 @@
+name = "GroundHeatExchangerANN"
+uuid = "e2b85c94-70c1-4f9c-a6da-5cd1c104b4b2"
+version = "1.0.0"
+authors = ["Gabriel-Dion <dion.gabriel100@gmail.com>"]
+
+[deps]
+PCHIPInterpolation = "afe20452-48d1-4729-9a8b-50fb251f06cd"
+
+[compat]
+PCHIPInterpolation = "0.2"
+julia = "1.11"
+
+[extras]
+Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[targets]
+test = ["Test"]

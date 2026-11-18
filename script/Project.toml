@@ -1,0 +1,10 @@
+[deps]
+CairoMakie = "13f3f980-e62b-5c42-98c6-ff1f3baf88f0"
+GroundHeatExchangerANN = "e2b85c94-70c1-4f9c-a6da-5cd1c104b4b2"
+
+[sources]
+GroundHeatExchangerANN = {path = ".."}
+
+[compat]
+CairoMakie = "0.15"
+julia = "1.11"

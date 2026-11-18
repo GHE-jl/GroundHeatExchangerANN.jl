@@ -1,0 +1,10 @@
+[deps]
+Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
+GroundHeatExchangerANN = "e2b85c94-70c1-4f9c-a6da-5cd1c104b4b2"
+
+[sources]
+GroundHeatExchangerANN = {path = ".."}
+
+[compat]
+Documenter = "1"
+julia = "1.11"
