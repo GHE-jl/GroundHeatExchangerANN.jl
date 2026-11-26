@@ -1,10 +1,10 @@
-# Short-term outlet transfer function of a single U-tube borehole from the two trained ANNs.
+# Short-term outlet g-function of a single U-tube borehole from the two trained ANNs.
 #   Figure, left  : PublishedANN vs DeepANN on the same borehole — native nodes (`ann_nodes`) and
 #                   PCHIP interpolation onto a user time vector (`ann`)
 #   Figure, right : DeepANN sensitivity to the ground thermal conductivity ks
 #
 # To join this short-term response to a long-term ground model (minutes to decades), see
-# `outlet_transfer_function` and `script_outlet_transfer_function.jl` in GroundHeatExchanger.jl.
+# `outlet_gfunction` and `script_outlet_gfunction.jl` in GroundHeatExchanger.jl.
 #
 # References
 #   - Pasquier, P., Zarrella, A., & Labib, R. (2018). Application of artificial neural networks to

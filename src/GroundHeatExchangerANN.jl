@@ -17,7 +17,7 @@ _pchip(tᵢ, vᵢ, t) = Interpolator(tᵢ, vᵢ).(t)
 # Model tags
 export AbstractANN, PublishedANN, DeepANN
 
-# Short-term outlet transfer function: interpolated at any time, or on the native nodes
+# Short-term outlet g-function: interpolated at any time, or on the native nodes
 export ann, ann_nodes
 
 end

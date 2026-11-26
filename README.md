@@ -5,15 +5,15 @@
 [![Docs: stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://GHE-jl.github.io/GroundHeatExchangerANN.jl/stable)
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPLv3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
 
-Julia package for the short-term transfer function of the borehole-outlet fluid temperature of a
+Julia package for the short-term g-function of the borehole-outlet fluid temperature of a
 single U-tube ground heat exchanger, from trained artificial neural networks (ANNs). The networks
-emulate the thermal resistance and capacity model and yield the dimensionless outlet transfer
-function for a 1 °C step between the borehole inlet and outlet, including the borehole geometry,
+emulate the thermal resistance and capacity model and yield the dimensionless outlet
+g-function for a 1 °C step between the borehole inlet and outlet, including the borehole geometry,
 thermal capacity and vertical fluid advection.
 
 The package is part of the GHE.jl ecosystem: its networks are re-exported by
 [GroundHeatExchanger.jl](https://github.com/GHE-jl/GroundHeatExchanger.jl), whose
-`outlet_transfer_function` joins them to a long-term ground model from minutes to decades.
+`outlet_gfunction` joins them to a long-term ground model from minutes to decades.
 
 ## Quick start
 
@@ -39,15 +39,15 @@ ts, gn = ann_nodes(PublishedANN(), ks, Cs, kg, Cg, kp, Cp, Cf, ri, ro, rb, H, V�
 | `PublishedANN()` | Pasquier, Zarrella & Labib (2018) — pipe properties fixed | 85 | 7 days |
 | `DeepANN()` | Pasquier & Marcotte (2020) — pipe properties free, wider validity ranges | 95 | 21 days |
 
-Both are subtypes of `AbstractANN`. `DeepANN` is the default of `outlet_transfer_function` in
+Both are subtypes of `AbstractANN`. `DeepANN` is the default of `outlet_gfunction` in
 GroundHeatExchanger.jl.
 
 ## Functions
 
 | Function | Description |
 |---|---|
-| `ann(model, t, rb, ri, ro, H, s, V̇, ks, Cs, kg, Cg, kp, Cp, Cf; clamp = true)` | Outlet transfer function at `t`, returns `(t, g)` |
-| `ann_nodes(model, ks, Cs, kg, Cg, kp, Cp, Cf, ri, ro, rb, H, V̇, s; clamp = true)` | Outlet transfer function on the native nodes, returns `(ts, g)` |
+| `ann(model, t, rb, ri, ro, H, s, V̇, ks, Cs, kg, Cg, kp, Cp, Cf; clamp = true)` | Outlet g-function at `t`, returns `(t, g)` |
+| `ann_nodes(model, ks, Cs, kg, Cg, kp, Cp, Cf, ri, ro, rb, H, V̇, s; clamp = true)` | Outlet g-function on the native nodes, returns `(ts, g)` |
 
 Inputs outside the training ranges of the network (listed in the docstrings) are clamped to the
 nearest bound with a warning (`clamp = true`, default) or rejected with an `ArgumentError`

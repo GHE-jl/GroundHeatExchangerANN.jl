@@ -1,4 +1,4 @@
-# The 85 geometric time nodes [s] on which the ANN reproduces the transfer function. They are
+# The 85 geometric time nodes [s] on which the ANN reproduces the g-function. They are
 # fixed by the training procedure (Pasquier et al., 2018); the last node (604800 s = 7 days)
 # marks the short-term validity horizon.
 const _ST_NODES = [
@@ -13,15 +13,15 @@ const _ST_NODES = [
 """
     ann(::PublishedANN, t, rb, ri, ro, H, s, V̇, ks, Cs, kg, Cg, kp, Cp, Cf; clamp=true)
 
-Short-term transfer function of the borehole-**outlet** fluid temperature (`T_out`, i.e. the
+Short-term g-function of the borehole-**outlet** fluid temperature (`T_out`, i.e. the
 entering water temperature on the heat-pump source side), constructed with the artificial
 neural network of Pasquier, Zarrella & Labib (2018). The network emulates the 2.5D thermal
-resistance and capacity model and directly yields a dimensionless transfer function for a unit
+resistance and capacity model and directly yields a dimensionless g-function for a unit
 temperature step (ΔT = 1 °C) between the borehole inlet and outlet, so it embeds the borehole
 geometry, thermal capacity and vertical fluid advection. The mean absolute error with respect to
 the reference model is about 2e-4, with a maximum absolute error near 8e-3. The function is only
 valid over the 7-day short-term horizon and within the ANN training ranges (see below); use
-`outlet_transfer_function` of GroundHeatExchanger.jl to join it to a long-term ground model for the
+`outlet_gfunction` of GroundHeatExchanger.jl to join it to a long-term ground model for the
 full minutes-to-decades response.
 # Arguments
     - `t`: Time value or vector [s] (maximum of 7 days)
@@ -42,7 +42,7 @@ full minutes-to-decades response.
         and emits a `@warn`; `false` emits an `@error` and throws an `ArgumentError`.
 # Output
     - `t`: Evaluation time(s) [s] (the last value clamped to the horizon when `clamp` is `true`)
-    - `g`: Dimensionless short-term outlet transfer function at `t` [-]
+    - `g`: Dimensionless short-term outlet g-function at `t` [-]
 # Validity ranges (ANN training bounds)
     - t: 15 s – 7 days (horizon applied to the last value)
     - rb: (2ro+2mm)–0.1 m
@@ -66,7 +66,7 @@ full minutes-to-decades response.
 function ann(::PublishedANN, t, rb, ri, ro, H, s, V̇, ks, Cs, kg, Cg, kp, Cp, Cf;
     clamp::Bool = true)
 
-    # Native ANN transfer function on the 85 fixed nodes
+    # Native ANN g-function on the 85 fixed nodes
     _, g_nodes = ann_nodes(PublishedANN(), ks, Cs, kg, Cg, kp, Cp, Cf, ri, ro, rb, H, V̇, s;
         clamp = clamp)
 
@@ -84,9 +84,9 @@ end
 
 Evaluate the ANN on its fixed native time nodes, returning `(ts, g)` where `ts` are the node
 times [s] — geometric, with the last node marking the short-term validity horizon — and `g` is
-the raw short-term transfer function on those nodes — no interpolation and no time validation,
+the raw short-term g-function on those nodes — no interpolation and no time validation,
 unlike `ann`. This is the low-level building block: `ann` adds PCHIP interpolation onto
-arbitrary `t`, and the short-/long-term join `outlet_transfer_function` of GroundHeatExchanger.jl
+arbitrary `t`, and the short-/long-term join `outlet_gfunction` of GroundHeatExchanger.jl
 consumes the raw nodes directly (it splices at `ts[end]` and does its own interpolation).
 Inverts the training transformation `y = ln(t̃ / (g + 1))` (85 nodes). See
 `ann_nodes(::DeepANN, ...)` in `ann_deep.jl` for the wider-range 95-node/21-day model.
@@ -189,7 +189,7 @@ end
 
 Forward pass of the trained multilayer perceptron: two tanh hidden layers and a linear output
 layer, with min–max scaling on the input and inverse scaling on the output. Maps the
-8-parameter vector `x1 = [ks, Cs, kg, Cg, rb, H, V̇, D]` to the 85 transformed transfer-function
+8-parameter vector `x1 = [ks, Cs, kg, Cg, rb, H, V̇, D]` to the 85 transformed g-function
 values. Ported from the MATLAB Neural Network Toolbox `genFunction` output.
 """
 function _ann_forward(x1)

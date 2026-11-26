@@ -12,7 +12,7 @@ PublishedANN
 DeepANN
 ```
 
-## Transfer functions
+## g-functions
 
 ```@docs
 ann

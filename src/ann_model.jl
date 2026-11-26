@@ -2,7 +2,7 @@
     AbstractANN
 
 Model tag selecting which trained short-term ANN [`ann_nodes`](@ref),
-[`ann`](@ref) and `outlet_transfer_function` (GroundHeatExchanger.jl) evaluate.
+[`ann`](@ref) and `outlet_gfunction` (GroundHeatExchanger.jl) evaluate.
 """
 abstract type AbstractANN end
 
@@ -20,7 +20,7 @@ struct PublishedANN <: AbstractANN end
 
 Short-term ANN of Pasquier & Marcotte (2020): pipe properties (`kp`, `Cf`, `ri`, `ro`) are free
 parameters with their own (wider) validity ranges, 95 time nodes, 21-day validity horizon. This is
-the **default** model tag for `outlet_transfer_function` (GroundHeatExchanger.jl). See
+the **default** model tag for `outlet_gfunction` (GroundHeatExchanger.jl). See
 `ann_nodes(::DeepANN, ...)` for the validity ranges. Only the borehole-outlet response is
 exposed (the underlying network can in principle report the temperature at any probe location
 along the U-tube). Implemented in `ann_deep.jl`.
